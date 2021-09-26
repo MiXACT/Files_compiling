@@ -1,30 +1,25 @@
-f1 = []
-f2 = []
-f3 = []
-ff = []
-
 def file_reading(file_name):
+	'''Принимает на вход имя файла для чтения;
+	возвращает список, каждый эл-т которого - строка файла'''
 	data = [file_name + '\n']
 	with open(file_name) as f:
 		 data += f.readlines()
 	return data
 
-f1 = file_reading('1.txt')
-f2 = file_reading('2.txt')
-f3 = file_reading('3.txt')
+files_data = []
 
-ff.append(f1)
-ff.append(f2)
-ff.append(f3)
+#цикл чтения файлов; имена файлов задаются числами через f-строку
+for i in range(3):
+	files_data.append(file_reading(f'{i + 1}.txt'))
 
-new_ff = sorted(ff, key=len)
-new_file_string = ''
+files_data = sorted(files_data, key=len)
+new_file = ''
+
 with open('result.txt', 'w') as res:
-	for i in range(len(new_ff)):
-		new_ff[i].insert(1, f'{len(new_ff[i]) - 1}\n')
-		for j in range(len(new_ff[i])):
-			new_file_string += new_ff[i][j]
-		new_file_string += '\n'
-		# print(new_ff[i])
-	res.write(new_file_string)
+	for i in range(len(files_data)):
+		files_data[i].insert(1, f'{len(files_data[i]) - 1}\n')
+		for j in range(len(files_data[i])):
+			new_file += files_data[i][j]
+		new_file += '\n'
+	res.write(new_file)
 
